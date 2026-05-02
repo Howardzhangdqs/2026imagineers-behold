@@ -1,0 +1,782 @@
+@import "tailwindcss";
+
+/* ===== Global Styles ===== */
+
+body {
+  font-family: 'PingFang SC', 'Microsoft YaHei', 'Hiragino Sans GB', sans-serif;
+  overflow: hidden;
+  background: #1a1a2e;
+}
+
+#app {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+img {
+  -webkit-user-drag: none;
+}
+
+/* ===== Stage Visual Styles ===== */
+.game-root {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  transition: filter 2s ease, background-color 2s ease;
+  background-size: cover;
+  background-position: center;
+}
+
+.game-root.stage-1 {
+  filter: brightness(1.05) saturate(1.1);
+  background-color: #fafafa;
+  background-image: url('/images/backgrounds/shop_clean.png');
+}
+
+.game-root.stage-2 {
+  filter: brightness(1.03) saturate(1.08);
+  background-color: #f5f5f5;
+  background-image: url('/images/backgrounds/shop_slightly_messy.png');
+}
+
+.game-root.stage-3 {
+  filter: saturate(0.9);
+  background-color: #e8edf2;
+  background-image: url('/images/backgrounds/shop_digital.png');
+}
+
+.game-root.stage-4 {
+  filter: contrast(1.1) hue-rotate(-5deg);
+  background-color: #3a1a1a;
+  background-image: url('/images/backgrounds/shop_car.png');
+}
+
+.game-root.stage-4-late {
+  filter: contrast(1.3) brightness(0.8) hue-rotate(-8deg);
+  background-color: #2a0a0a;
+  background-image: url('/images/backgrounds/shop_warzone_car.png');
+}
+
+.game-root.stage-5 {
+  filter: sepia(0.7) saturate(0.5) contrast(1.1) brightness(0.85);
+  background-color: #3d3025;
+  background-image: url('/images/backgrounds/shop_ruin_car.png');
+}
+
+/* ===== Stage Scrollbars ===== */
+[class*="scrollbar-stage"] {
+  scrollbar-width: thin;
+}
+
+[class*="scrollbar-stage"]::-webkit-scrollbar {
+  width: 6px;
+}
+
+[class*="scrollbar-stage"]::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+[class*="scrollbar-stage"]::-webkit-scrollbar-thumb {
+  border-radius: 3px;
+}
+
+.scrollbar-stage-1 {
+  scrollbar-color: rgba(180, 140, 60, 0.35) transparent;
+}
+
+.scrollbar-stage-1::-webkit-scrollbar-thumb {
+  background: rgba(180, 140, 60, 0.35);
+}
+
+.scrollbar-stage-1::-webkit-scrollbar-thumb:hover {
+  background: rgba(180, 140, 60, 0.65);
+}
+
+.scrollbar-stage-2 {
+  scrollbar-color: rgba(107, 158, 92, 0.35) transparent;
+}
+
+.scrollbar-stage-2::-webkit-scrollbar-thumb {
+  background: rgba(107, 158, 92, 0.35);
+}
+
+.scrollbar-stage-2::-webkit-scrollbar-thumb:hover {
+  background: rgba(107, 158, 92, 0.65);
+}
+
+.scrollbar-stage-3 {
+  scrollbar-color: rgba(107, 139, 164, 0.35) transparent;
+}
+
+.scrollbar-stage-3::-webkit-scrollbar-thumb {
+  background: rgba(107, 139, 164, 0.35);
+}
+
+.scrollbar-stage-3::-webkit-scrollbar-thumb:hover {
+  background: rgba(107, 139, 164, 0.65);
+}
+
+.scrollbar-stage-4 {
+  scrollbar-color: rgba(184, 64, 64, 0.45) transparent;
+}
+
+.scrollbar-stage-4::-webkit-scrollbar-thumb {
+  background: rgba(184, 64, 64, 0.45);
+}
+
+.scrollbar-stage-4::-webkit-scrollbar-thumb:hover {
+  background: rgba(184, 64, 64, 0.75);
+}
+
+/* ===== Rust Overlay ===== */
+.rust-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 5;
+  background-image: url('/images/effects/rust_overlay.png');
+  background-size: cover;
+  background-repeat: repeat;
+  opacity: 0;
+  transition: opacity 5s ease;
+}
+
+.game-root.stage-4 .rust-overlay {
+  opacity: 0.15;
+}
+
+.game-root.stage-4-late .rust-overlay {
+  opacity: 0.4;
+}
+
+/* ===== Red Flash ===== */
+.red-flash {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 100;
+  background-color: rgba(255, 0, 0, 0.3);
+  animation: flashRed 0.3s ease-out forwards;
+}
+
+/* ===== @keyframes ===== */
+@keyframes slideFromLeft {
+  from {
+    transform: translateX(-120%);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideFromRight {
+  from {
+    transform: translateX(120%);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideFromTop {
+  from {
+    transform: translateY(-120%);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideFromBottom {
+  from {
+    transform: translateY(120%);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes popIn {
+  from {
+    transform: scale(0);
+    opacity: 0;
+  }
+
+  70% {
+    transform: scale(1.1);
+  }
+
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes popOut {
+  from {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  to {
+    transform: scale(0);
+    opacity: 0;
+  }
+}
+
+@keyframes screenShake {
+
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+
+  10% {
+    transform: translate(-4px, 2px);
+  }
+
+  20% {
+    transform: translate(4px, -2px);
+  }
+
+  30% {
+    transform: translate(-3px, 3px);
+  }
+
+  40% {
+    transform: translate(3px, -3px);
+  }
+
+  50% {
+    transform: translate(-2px, 1px);
+  }
+
+  60% {
+    transform: translate(2px, -1px);
+  }
+
+  70% {
+    transform: translate(-1px, 2px);
+  }
+
+  80% {
+    transform: translate(1px, -2px);
+  }
+
+  90% {
+    transform: translate(-2px, 1px);
+  }
+}
+
+@keyframes graffitiSpread {
+  from {
+    clip-path: circle(0% at 50% 50%);
+    transform: scale(0.5) rotate(-15deg);
+  }
+
+  to {
+    clip-path: circle(80% at 50% 50%);
+    transform: scale(1) rotate(0deg);
+  }
+}
+
+@keyframes barrageFlyIn {
+  from {
+    opacity: 0;
+    transform: translate(var(--barrage-from-x, 100%), var(--barrage-from-y, 0)) scale(0.5);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate(0, 0) scale(1);
+  }
+}
+
+@keyframes throwHat {
+  0% {
+    transform: translate(0, 0) rotate(0deg) scale(0.3);
+    opacity: 0;
+  }
+
+  20% {
+    opacity: 1;
+  }
+
+  80% {
+    opacity: 1;
+  }
+
+  100% {
+    transform: translate(var(--hat-dx, 200px), var(--hat-dy, -100px)) rotate(var(--hat-rot, 360deg)) scale(1);
+    opacity: 0;
+  }
+}
+
+@keyframes flashRed {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes attackShake {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  3% {
+    transform: rotate(-6deg);
+  }
+
+  6% {
+    transform: rotate(6deg);
+  }
+
+  9% {
+    transform: rotate(-5deg);
+  }
+
+  12% {
+    transform: rotate(5deg);
+  }
+
+  15% {
+    transform: rotate(-3deg);
+  }
+
+  18% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+.attack-sway {
+  animation-name: attackShake;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+}
+
+.ai-cursor {
+  position: fixed;
+  z-index: 99995;
+  pointer-events: none;
+  transition-property: left, top;
+  transition-timing-function: cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+.ai-cursor-clicking {
+  transform: scale(0.8);
+  transition-property: left, top, transform;
+  transition-timing-function: cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+.character-leave {
+  animation: fadeOut 0.6s ease-out forwards;
+}
+
+@keyframes floatUpDamage {
+  0% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateY(-40px) scale(1.5);
+  }
+}
+
+@keyframes glitchText {
+  0% {
+    clip-path: inset(40% 0 61% 0);
+    transform: translate(-2px, 2px);
+  }
+
+  25% {
+    clip-path: inset(92% 0 1% 0);
+    transform: translate(1px, -1px);
+  }
+
+  50% {
+    clip-path: inset(43% 0 1% 0);
+    transform: translate(-1px, 3px);
+  }
+
+  75% {
+    clip-path: inset(25% 0 58% 0);
+    transform: translate(2px, 1px);
+  }
+
+  100% {
+    clip-path: inset(54% 0 7% 0);
+    transform: translate(2px, -2px);
+  }
+}
+
+@keyframes rustFadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideDown {
+  from {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes toastIn {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes toastOut {
+  from {
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  to {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ===== Glitch text (applied via class) ===== */
+.glitch-text {
+  animation: glitchText 0.3s steps(2) infinite;
+}
+
+/* ===== Screen shake (applied via class) ===== */
+.screen-shake {
+  animation: screenShake 0.5s ease-in-out;
+}
+
+/* ===== Animation paused for Stage 5 ===== */
+.game-root.stage-5 * {
+  animation-play-state: paused !important;
+}
+
+.game-root.stage-5 .ending-allow-animation {
+  animation-play-state: running !important;
+}
+
+/* ===== Credits scroll (Stage 5) ===== */
+.text-shadow-credits {
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.7), 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+/* ===== Transition Classes ===== */
+.fade-enter-active {
+  animation: fadeIn 0.3s ease;
+}
+
+.fade-leave-active {
+  animation: fadeOut 0.3s ease;
+}
+
+.scale-enter-active {
+  animation: popIn 0.3s ease;
+}
+
+.scale-leave-active {
+  animation: popOut 0.2s ease;
+}
+
+/* ===== TransitionGroup list transitions ===== */
+.list-enter-active {
+  animation: fadeInUp 0.3s ease;
+}
+
+.list-leave-active {
+  animation: fadeOut 0.3s ease;
+}
+
+/* ===== Chaos-driven stage visual upgrades ===== */
+.game-root.stage-4-chaos-mid {
+  filter: contrast(1.15) brightness(0.85) hue-rotate(-5deg);
+}
+
+.game-root.stage-4-chaos-high {
+  filter: contrast(1.25) brightness(0.75) hue-rotate(-8deg) saturate(1.2);
+}
+
+.game-root.stage-4-chaos-high .rust-overlay {
+  opacity: 0.3;
+}
+
+.game-root.stage-4-chaos-max {
+  filter: contrast(1.35) brightness(0.65) hue-rotate(-12deg) saturate(1.4);
+  animation: maxChaosGlitch 3s steps(1) infinite;
+}
+
+.game-root.stage-4-chaos-max .rust-overlay {
+  opacity: 0.5;
+}
+
+/* ===== Crazy red text overlay ===== */
+@keyframes crazyTextFade {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.8);
+  }
+  16.7% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  83.3% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(1.1);
+  }
+}
+
+.crazy-text {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  z-index: 99990;
+  pointer-events: none;
+  color: #ff2020;
+  font-size: 2rem;
+  font-weight: 900;
+  text-shadow: 0 0 10px rgba(255, 0, 0, 0.8), 0 0 20px rgba(255, 0, 0, 0.4);
+  white-space: nowrap;
+  animation: crazyTextFade 3s ease-in-out forwards;
+}
+
+/* ===== AI takeover sepia transition ===== */
+.game-root.ai-takeover-active {
+  transition: filter 8s ease-in;
+  filter: contrast(1.35) brightness(0.55) sepia(0.6) saturate(0.5) hue-rotate(-15deg);
+}
+
+.game-root.ai-takeover-active .rust-overlay {
+  opacity: 0.6;
+  transition: opacity 8s ease-in;
+}
+
+/* ===== Fly-up to chaos bar animation ===== */
+@keyframes flyUpToBar {
+  0% {
+    transform: translateY(0) scale(var(--impact-scale, 1));
+    opacity: 0.9;
+  }
+
+  30% {
+    transform: translateY(-25vh) scale(calc(var(--impact-scale, 1) * 1.3));
+    opacity: 1;
+  }
+
+  60% {
+    transform: translateY(-45vh) scale(calc(var(--impact-scale, 1) * 0.9));
+    opacity: 0.9;
+  }
+
+  80% {
+    transform: translateY(-50vh) scale(calc(var(--impact-scale, 1) * 1.5));
+    opacity: 0.7;
+  }
+
+  100% {
+    transform: translateY(-52vh) scale(0);
+    opacity: 0;
+  }
+}
+
+.fly-up-animation {
+  animation: flyUpToBar 0.8s ease-out forwards;
+  pointer-events: none;
+}
+
+/* ===== Chaos bar impact flash ===== */
+@keyframes chaosImpact {
+  0% {
+    opacity: 0.6;
+    transform: scaleX(1.05);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scaleX(1);
+  }
+}
+
+/* ===== Chaos bar pulse (high chaos) ===== */
+@keyframes chaosBarPulse {
+
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  25% {
+    transform: translateX(-2px);
+  }
+
+  75% {
+    transform: translateX(2px);
+  }
+}
+
+.chaos-bar-pulse {
+  animation: chaosBarPulse 0.3s ease-in-out infinite;
+}
+
+.chaos-bar-overflow {
+  animation: chaosBarOverflow 0.4s ease-in-out infinite;
+  box-shadow: 0 0 15px rgba(255, 0, 0, 0.6), 0 0 30px rgba(255, 0, 0, 0.3);
+}
+
+/* ===== Max chaos screen glitch ===== */
+@keyframes maxChaosGlitch {
+
+  0%,
+  94% {
+    filter: contrast(1.35) brightness(0.65) hue-rotate(-12deg) saturate(1.4);
+  }
+
+  95% {
+    filter: contrast(1.5) brightness(0.55) hue-rotate(-20deg) saturate(1.6);
+  }
+
+  96%,
+  100% {
+    filter: contrast(1.35) brightness(0.65) hue-rotate(-12deg) saturate(1.4);
+  }
+}
+
+@keyframes chaosBarOverflow {
+
+  0%,
+  100% {
+    transform: translateX(0) scaleX(1);
+  }
+
+  25% {
+    transform: translateX(-3px) scaleX(1.02);
+  }
+
+  50% {
+    transform: translateX(3px) scaleX(0.98);
+  }
+
+  75% {
+    transform: translateX(-2px) scaleX(1.01);
+  }
+}
+
+@keyframes blackoutIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.blackout-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  background: black;
+  pointer-events: none;
+  opacity: 0;
+}
+
+.blackout-active {
+  opacity: 1;
+  transition: opacity 5s ease-in;
+}
+
+.blackout-fading {
+  opacity: 0;
+  transition: opacity 3s ease-in;
+}
