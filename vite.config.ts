@@ -10,7 +10,7 @@ export default defineConfig({
   server: {
     host: true,
   },
-  base: './',
+  base: '/2026imagineers-behold/',
   plugins: [
     vue(),
     vueDevTools(),

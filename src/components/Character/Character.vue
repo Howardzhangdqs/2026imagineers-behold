@@ -105,7 +105,7 @@ const totalLines = computed(() =>
   matchedLines.value.length > 0 ? matchedLines.value.length : props.character.fallbackLines.length,
 )
 
-const avatarSrc = computed(() => `/images/characters/${props.character.avatar}.png`)
+const avatarSrc = computed(() => `${import.meta.env.BASE_URL}images/characters/${props.character.avatar}.png`)
 
 const animationClass = computed(() => {
   switch (props.character.position) {

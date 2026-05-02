@@ -7,7 +7,7 @@
       <div v-if="product.category !== 'car'" class="h-24 flex items-center justify-center mb-2">
         <div v-if="product.category === 'attack' || product.category === 'defense'" class="text-5xl leading-none">{{
           product.emoji }}</div>
-        <img v-else :src="`/images/products/${product.id}.png`" :alt="product.name"
+        <img v-else :src="`${import.meta.env.BASE_URL}images/products/${product.id}.png`" :alt="product.name"
           class="max-h-full object-contain rounded-lg" />
       </div>
       <h3 class="font-bold text-sm text-gray-800 truncate">{{ product.name }}</h3>

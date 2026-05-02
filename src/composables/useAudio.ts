@@ -2,7 +2,7 @@ import { ref } from 'vue'
 import { Howl } from 'howler'
 import type { GameStage } from '@/types'
 
-const audioBase = '/src/assets/audio/'
+const audioBase = new URL('@/assets/audio/', import.meta.url).href
 
 const sfxFiles: Record<string, string> = {
   pop: 'pop.mp3',

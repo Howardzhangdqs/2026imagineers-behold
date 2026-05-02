@@ -59,7 +59,7 @@ function addGraffiti() {
   const file = graffitiFiles[graffitiList.value.length % graffitiFiles.length]
   const g: GraffitiElement = {
     id: `g-${graffitiList.value.length}`,
-    src: `/images/graffiti/${file}.png`,
+    src: `${import.meta.env.BASE_URL}images/graffiti/${file}.png`,
     x: Math.random() * 85,
     y: Math.random() * 80,
     size: 80 + Math.random() * 150,
